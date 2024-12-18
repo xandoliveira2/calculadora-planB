@@ -24,9 +24,22 @@ jobs:
         with:
           node-version: '20'
 
-      # Instalar dependências do projeto (incluindo Jest)
-      - name: Instalar dependências
-        run: npm install
+      # Instalar Jest globalmente
+      - name: Instalar Jest globalmente
+        run: sudo npm install -g jest
+
+      # Garantir que o Jest foi instalado corretamente
+      - name: Verificar instalação do Jest
+        run: which jest
+
+      # Garantir permissões para Jest (ajustado para o caminho correto)
+      - name: Definir permissões para Jest
+        run: |
+          if which jest; then
+            sudo chmod +x $(which jest)
+          else
+            echo "Jest não encontrado!"
+          fi
 
       # Criar o arquivo de teste
       - name: Criar arquivo de teste
@@ -44,10 +57,6 @@ jobs:
               expect(() => calcularIMC(1.75, 0)).toThrow();
               expect(() => calcularIMC(-1.75, 70)).toThrow();
           });" > test.js
-
-      # Garantir permissões para Jest
-      - name: Definir permissões para Jest
-        run: sudo chmod +x $(which jest)
 
       # Executar Jest
       - name: Executar Jest
