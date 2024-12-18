@@ -18,15 +18,15 @@ jobs:
       - name: Clonar o repositório
         uses: actions/checkout@v3
 
-      # Passo 2: Configurar Node.js (para executar testes com JavaScript)
+      # Passo 2: Configurar Node.js
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      # Passo 3: Instalar dependências (Jest para testes unitários)
-      - name: Instalar dependências
-        run: npm install jest --save-dev
+      # Passo 3: Instalar Jest
+      - name: Instalar Jest
+        run: npm install jest --no-save
 
       # Passo 4: Criar o arquivo de teste
       - name: Criar arquivo de teste
@@ -48,4 +48,3 @@ jobs:
       # Passo 5: Executar os testes
       - name: Executar testes com Jest
         run: npx jest
-
