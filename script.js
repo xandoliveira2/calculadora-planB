@@ -46,12 +46,24 @@ function excluirRegistro(index) {
 
 // Salvar e processar o formulário
 form.addEventListener("submit", (e) => {
+
     e.preventDefault();
     const altura = parseFloat(document.getElementById("altura").value);
     const peso = parseFloat(document.getElementById("peso").value);
 
     const imc = calcularIMC(altura, peso);
     const classificacao = classificarIMC(imc);
+
+    dados = {
+        altura : altura,
+        peso : peso,
+        imc : imc,
+        classificacao : classificacao,
+        ativo : true,
+    }
+    
+
+
 
     historico.unshift({
         id: id++,

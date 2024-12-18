@@ -48,15 +48,24 @@
             margin-bottom: 10px;
             border-radius: 5px;
         }
+        .alert-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border: 1px solid #f5c6cb;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <h1>Calculadora de IMC</h1>
 
-    <!-- Mensagem de sucesso -->
+    <!-- Mensagens -->
     <div id="success-message" class="success-message" style="display: none;">
         Cálculo de IMC registrado com sucesso! Peso ideal, parabéns! Continue assim.
     </div>
+    <div id="alert-message" class="alert-message" style="display: none;"></div>
 
     <!-- Formulário -->
     <div>
@@ -93,6 +102,16 @@
             return (peso / (altura * altura)).toFixed(2);
         }
 
+        // Função para classificar o IMC e retornar uma mensagem personalizada
+        function classificarIMC(imc) {
+            if (imc < 18.5) return "Abaixo do peso";
+            if (imc < 24.9) return "Peso ideal";
+            if (imc < 29.9) return "Sobrepeso";
+            if (imc < 34.9) return "Obesidade I";
+            if (imc < 39.9) return "Obesidade II";
+            return "Obesidade III";
+        }
+
         // Renderizar o histórico na tabela
         function renderizarHistorico() {
             const tbody = document.getElementById("historico");
@@ -124,8 +143,23 @@
             // Calcula o IMC
             const imc = calcularIMC(altura, peso);
 
+            // Classifica o IMC
+            const classificacao = classificarIMC(imc);
+
+            // Exibe a mensagem de alerta com base na classificação
+            const alertMessage = document.getElementById("alert-message");
+            if (imc < 24.9) {
+                alertMessage.style.display = "block";
+                alertMessage.innerHTML = "Lembre-se de se nutrir melhor para manter o peso ideal!";
+            } else if (imc >= 30) {
+                alertMessage.style.display = "block";
+                alertMessage.innerHTML = "Você precisa ser mais rígido na alimentação para alcançar um IMC saudável!";
+            } else {
+                alertMessage.style.display = "none";
+            }
+
             // Adiciona ao histórico
-            historicoIMC.push({ altura: altura.toFixed(2), peso: peso.toFixed(2), imc });
+            historicoIMC.push({ altura: altura.toFixed(2), peso: peso.toFixed(2), imc, classificacao });
             localStorage.setItem('historicoIMC', JSON.stringify(historicoIMC)); // Salva no Local Storage
 
             // Exibe a mensagem de sucesso
