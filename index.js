@@ -11,6 +11,8 @@ function calcularIMC(altura, peso) {
     return (peso / (altura * altura)).toFixed(2);
 }
 
+export { calcularIMC }
+
 // Função para obter a classificação do IMC
 function classificarIMC(imc) {
     if (imc < 18.5) return "Abaixo do peso";

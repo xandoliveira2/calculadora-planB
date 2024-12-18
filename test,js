@@ -1,4 +1,4 @@
-const calcularIMC = require('./calcularIMC');
+import { calcularIMC } from "./index";
 
 describe('Função calcularIMC', () => {
     test('Deve calcular IMC para altura 1.75 e peso 70', () => {
