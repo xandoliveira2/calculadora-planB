@@ -14,21 +14,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Clonar o repositório
+      # Clonar o repositório
       - name: Clonar o repositório
         uses: actions/checkout@v3
 
-      # Passo 2: Configurar Node.js
+      # Configurar Node.js
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      # Passo 3: Instalar Jest
-      - name: Instalar Jest
-        run: npm install jest --no-save
+      # Instalar dependências do projeto (incluindo Jest)
+      - name: Instalar dependências
+        run: npm install
 
-      # Passo 4: Criar o arquivo de teste
+      # Criar o arquivo de teste
       - name: Criar arquivo de teste
         run: |
           echo "const { calcularIMC } = require('./index'); // Ajuste o caminho conforme necessário
@@ -45,14 +45,10 @@ jobs:
               expect(() => calcularIMC(-1.75, 70)).toThrow();
           });" > test.js
 
-      # Passo 5: Executar os testes
-      - name: Executar testes com Jest
-        run: npx jest
+      # Garantir permissões para Jest
+      - name: Definir permissões para Jest
+        run: sudo chmod +x $(which jest)
 
-      - name: Corrigir permissões
-        run: chmod +x node_modules/.bin/jest
-
+      # Executar Jest
       - name: Executar Jest
-        run: ./node_modules/.bin/jest
-
-
+        run: npx jest
