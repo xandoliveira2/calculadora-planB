@@ -48,3 +48,11 @@ jobs:
       # Passo 5: Executar os testes
       - name: Executar testes com Jest
         run: npx jest
+
+      - name: Corrigir permissões
+        run: chmod +x node_modules/.bin/jest
+
+      - name: Executar Jest
+        run: ./node_modules/.bin/jest
+
+
