@@ -1,0 +1,31 @@
+const calcularIMC = require('./calcularIMC');
+
+describe('Função calcularIMC', () => {
+    test('Deve calcular IMC para altura 1.75 e peso 70', () => {
+        expect(calcularIMC(1.75, 70)).toBe("22.86");
+    });
+
+    test('Deve calcular IMC para altura 1.60 e peso 50', () => {
+        expect(calcularIMC(1.60, 50)).toBe("19.53");
+    });
+
+    test('Deve calcular IMC para altura 1.80 e peso 90', () => {
+        expect(calcularIMC(1.80, 90)).toBe("27.78");
+    });
+
+    test('Deve calcular IMC para altura 1.50 e peso 45', () => {
+        expect(calcularIMC(1.50, 45)).toBe("20.00");
+    });
+
+    test('Deve calcular IMC para altura 1.70 e peso 110', () => {
+        expect(calcularIMC(1.70, 110)).toBe("38.06");
+    });
+
+    test('Deve calcular IMC para altura 2.00 e peso 100', () => {
+        expect(calcularIMC(2.00, 100)).toBe("25.00");
+    });
+
+    test('Deve calcular IMC para altura 1.60 e peso 40', () => {
+        expect(calcularIMC(1.60, 40)).toBe("15.63");
+    });
+});
