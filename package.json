@@ -4,9 +4,12 @@
     "description": "Testes para calcular IMC",
     "main": "calcularIMC.js",
     "scripts": {
-      "test": "jest"
+        "test": "jest"
     },
     "devDependencies": {
-      "jest": "^29.0.0"
-    }
-  }
+        "jest": "^29.7.0"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
