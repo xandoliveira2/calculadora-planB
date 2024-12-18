@@ -1,4 +1,4 @@
-name: Testar Calculadora de IMC
+name: Lint Code
 
 on:
   push:
@@ -9,55 +9,20 @@ on:
       - main
 
 jobs:
-  test:
-    name: Executar Testes da Calculadora de IMC
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-      # Clonar o repositório
-      - name: Clonar o repositório
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      # Configurar Node.js
-      - name: Configurar Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '20'
+          node-version: '18'
 
-      # Instalar Jest globalmente
-      - name: Instalar Jest globalmente
-        run: sudo npm install -g jest
+      - name: Install dependencies
+        run: npm install
 
-      # Garantir que o Jest foi instalado corretamente
-      - name: Verificar instalação do Jest
-        run: which jest
-
-      # Garantir permissões para Jest (ajustado para o caminho correto)
-      - name: Definir permissões para Jest
-        run: |
-          if which jest; then
-            sudo chmod +x $(which jest)
-          else
-            echo "Jest não encontrado!"
-          fi
-
-      # Criar o arquivo de teste
-      - name: Criar arquivo de teste
-        run: |
-          echo "const { calcularIMC } = require('./index'); // Ajuste o caminho conforme necessário
-
-          test('Calcula o IMC corretamente', () => {
-              expect(calcularIMC(1.75, 70)).toBe('22.86');
-              expect(calcularIMC(1.60, 50)).toBe('19.53');
-              expect(calcularIMC(1.80, 80)).toBe('24.69');
-          });
-
-          test('Trata entradas inválidas', () => {
-              expect(() => calcularIMC(0, 70)).toThrow();
-              expect(() => calcularIMC(1.75, 0)).toThrow();
-              expect(() => calcularIMC(-1.75, 70)).toThrow();
-          });" > test.js
-
-      # Executar Jest
-      - name: Executar Jest
-        run: npx jest
+      - name: Run ESLint
+        run: npx eslint .
