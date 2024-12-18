@@ -1,4 +1,4 @@
-name: Testar Função Calcular IMC
+name: Testar Calculadora de IMC
 
 on:
   push:
@@ -10,19 +10,42 @@ on:
 
 jobs:
   test:
+    name: Executar Testes da Calculadora de IMC
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      # Passo 1: Clonar o repositório
+      - name: Clonar o repositório
         uses: actions/checkout@v3
 
+      # Passo 2: Configurar Node.js (para executar testes com JavaScript)
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20'
 
+      # Passo 3: Instalar dependências (Jest para testes unitários)
       - name: Instalar dependências
-        run: npm install
+        run: npm install jest --save-dev
 
-      - name: Executar testes
-        run: npm test
+      # Passo 4: Criar o arquivo de teste
+      - name: Criar arquivo de teste
+        run: |
+          echo "const { calcularIMC } = require('./index'); // Ajuste o caminho conforme necessário
+
+          test('Calcula o IMC corretamente', () => {
+              expect(calcularIMC(1.75, 70)).toBe('22.86');
+              expect(calcularIMC(1.60, 50)).toBe('19.53');
+              expect(calcularIMC(1.80, 80)).toBe('24.69');
+          });
+
+          test('Trata entradas inválidas', () => {
+              expect(() => calcularIMC(0, 70)).toThrow();
+              expect(() => calcularIMC(1.75, 0)).toThrow();
+              expect(() => calcularIMC(-1.75, 70)).toThrow();
+          });" > test.js
+
+      # Passo 5: Executar os testes
+      - name: Executar testes com Jest
+        run: npx jest
+
